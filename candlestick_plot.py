@@ -2,6 +2,7 @@ import pandas as pd
 from bokeh.io import output_file, show
 from bokeh.plotting import figure
 from bokeh.models import CustomJS, ColumnDataSource, HoverTool, NumeralTickFormatter
+from get_ccl1_data import get_ccl1_data_from_csv
 
 
 def candlestick_plot(df, name):
@@ -15,10 +16,10 @@ def candlestick_plot(df, name):
                  active_drag='xpan',
                  active_scroll='xwheel_zoom',
                  x_axis_type='linear',
-                 # x_range=Range1d(df.index[0], df.index[-1], bounds="auto"),
+                # x_range=Range1d(df.index[0], df.index[-1], bounds="auto"),
                  title=name
                  )
-    fig.yaxis[0].formatter = NumeralTickFormatter(format="$5.3f")
+    fig.yaxis[0].formatter = NumeralTickFormatter(format="5.3f")
     inc = df.Close > df.Open
     dec = ~inc
 
@@ -117,6 +118,7 @@ def candlestick_plot(df, name):
         }
         var pad = (max - min) * .05;
 
+
         window._autoscale_timeout = setTimeout(function() {
             y_range.start = min - pad;
             y_range.end = max + pad;
@@ -131,7 +133,10 @@ def candlestick_plot(df, name):
 # Main function
 if __name__ == '__main__':
     # Read CSV
-    df = pd.read_csv("./BA_60min.csv").head(500)
+    # df = pd.read_csv("./BA_60min.csv").head(500)
+    df = get_ccl1_data_from_csv("https://raw.githubusercontent.com/iamtonyc/ccl.data/master/ccl.csv")
+    df=df.sort_values(by=['month'],ascending=False)
+    df=df.reset_index(drop=True)
 
     # Reverse the order of the dataframe - comment this out if it flips your chart
     df = df[::-1]
@@ -139,11 +144,17 @@ if __name__ == '__main__':
 
     # Trim off the unnecessary bit of the minute timeframe data - can be unnecessary
     # depending on where you source your data
-    if '-04:00' in df['Date'][0]:
-        df['Date'] = df['Date'].str.slice(0, -6)
+    # if '-04:00' in df['Date'][0]:
+    #     df['Date'] = df['Date'].str.slice(0, -6)
 
     # Convert the dates column to datetime objects
-    df["Date"] = pd.to_datetime(df["Date"], format='%Y-%m-%d %H:%M:%S')  # Adjust this
+    # df["Date"] = pd.to_datetime(df["month"], format='%Y-%m-%d %H:%M:%S')  # Adjust this
+    df['Date'] = pd.to_datetime(df['month'], format='%Y-%m')  # Adjust this
+    df.Open=df['open']
+    df.High=df['high']
+    df.Low=df['low']
+    df.Close=df['close']
+
 
     output_file("BA_1hour_plot.html")
-    candlestick_plot(df, "BA Hourly")
+    candlestick_plot(df, "CCL")
