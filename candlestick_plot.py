@@ -156,5 +156,5 @@ if __name__ == '__main__':
     df.Close=df['close']
 
 
-    output_file("BA_1hour_plot.html")
+    output_file("ccl_plot.html")
     candlestick_plot(df, "CCL")
