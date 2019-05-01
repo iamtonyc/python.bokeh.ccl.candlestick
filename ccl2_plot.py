@@ -19,9 +19,7 @@ def line_plot(df, name):
 
 	tooltips=[
 	            ("Date", "@date{" +  '%Y-%m-%d' + "}"),
-	            ("CCL", "$y"),
-	            ("52 Week Moving Average X 0.96", "@sma52_096"),
-	            ("52 Week Moving Average X 1.06", "@sma52_106"),
+	            ("Value", "$y"),
 		     ]
 
 
