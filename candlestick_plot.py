@@ -13,7 +13,7 @@ def candlestick_plot(df, name):
         xaxis_dt_format = '%Y-%m'
 
     fig = figure(sizing_mode='stretch_both',
-                 tools="xpan,xwheel_zoom,reset,save",
+                 tools="crosshair,xpan,xwheel_zoom,reset,save",
                  active_drag='xpan',
                  active_scroll='xwheel_zoom',
                  x_axis_type='linear',
