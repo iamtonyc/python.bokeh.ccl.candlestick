@@ -25,10 +25,10 @@ def get_ccl1_data_from_data_frame(df):
 	import datetime
 	#%matplotlib inline
 	from numpy.random import randn
-	import plotly
-	import plotly.plotly as py
-	import plotly.graph_objs as go
-	import os
+	# import plotly
+	# import plotly.plotly as py
+	# import plotly.graph_objs as go
+	# import os
 
 	#plotly.tools.set_credentials_file(username='iamtonyc', api_key='9Q3RlU4RrMOpm8AFAMzX')
 	# filename, file_extension = os.path.splitext(filename)
